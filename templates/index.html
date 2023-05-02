@@ -88,14 +88,14 @@
     <div class="container">
       <form action="/upload" method="post" enctype="multipart/form-data" class="mt-4">
         <div class="mb-3">
-          <label for="csv_files" class="form-label">Select CSV files to merge</label>
+          <label for="csv_files" class="form-label">Sélectionner les fichiers CSV à fusionner (sélectionner l'ensemble des fichiers en même temps)</label>
           <input class="form-control" type="file" id="csv_files" name="csv_files[]" multiple required onchange="readCSVFiles(event)">
         </div>
         <div class="mb-3">
-          <label for="reference_block" class="form-label">Choose the reference block</label>
+          <label for="reference_block" class="form-label">Choisir le CSV de référence (optionnel - par défaut il s'agit du premier bloc)</label>
           <input class="form-control" type="number" id="reference_block" name="reference_block" min="1" required>
         </div>
-        <button type="submit" class="btn btn-custom">Merge and Download</button>
+        <button type="submit" class="btn btn-custom">Fusionner et Télécharger</button>
       </form>
       <div id="preview" class="mb-3 mt-4"></div>
     </div>
