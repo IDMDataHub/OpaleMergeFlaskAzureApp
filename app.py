@@ -76,7 +76,7 @@ def upload_files():
             df.set_index('initiales_nom')
             df = df.add_prefix(str(iCpt+1)+'_')
 
-        # Si la première colonne contient des nombres, appelle la colonne "blabla" comme index et ajoute un préfixe à chaque nom de colonne
+        # Si la première colonne contient des nombres, appelle la colonne "initiales_nom" comme index et ajoute un préfixe à chaque nom de colonne
         elif pd.Series(df.iloc[1, 0]).dtype in (int, float):
             df = df.rename(columns={df.columns[0]: 'initiales_nom'})
             df.set_index('initiales_nom')
