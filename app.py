@@ -61,7 +61,7 @@ def upload_files():
     first_rows = []  # Ajoutez cette ligne
     for iCpt, uploaded_file in enumerate(uploaded_files):
         # Lit le fichier CSV et stocke le contenu dans un DataFrame
-        df = pd.read_csv(uploaded_file, sep=';', encoding='latin-1')
+        df = pd.read_csv(uploaded_file, sep=';', encoding='utf-8')
         first_rows.append(df.head())
 
         # Vérifie si la colonne 'initiales_nom' existe dans le DataFrame
