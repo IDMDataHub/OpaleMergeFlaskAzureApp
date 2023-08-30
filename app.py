@@ -22,19 +22,19 @@ app = Flask(__name__)
 # #######################################################################################################################
 
 def convert_df(df):
-    """Convertit un DataFrame pandas en une chaîne d'octets encodée en UTF-8 avec un séparateur de colonnes personnalisé.
+    """Convertit un DataFrame pandas en une chaîne d'octets encodée en utf-8 avec un séparateur de colonnes personnalisé.
     
     Parameters:
         df (pandas.DataFrame): Le DataFrame à convertir.
         
     Returns:
-        bytes: La chaîne d'octets encodée en UTF-8 représentant le DataFrame.
+        bytes: La chaîne d'octets encodée en utf-8 représentant le DataFrame.
     """
     # Utilisation de ";" comme séparateur de colonnes personnalisé
     csv_data = df.to_csv(sep=';', index=False)
 
-    # Encodage des données CSV en UTF-8 pour éviter les erreurs liées aux caractères
-    encoded_data = csv_data.encode('utf-8')
+    # Encodage des données CSV en utf-8 pour éviter les erreurs liées aux caractères
+    encoded_data = csv_data.encode('latin1')
 
     return encoded_data
 
@@ -61,7 +61,7 @@ def upload_files():
     first_rows = []  # Ajoutez cette ligne
     for iCpt, uploaded_file in enumerate(uploaded_files):
         # Lit le fichier CSV et stocke le contenu dans un DataFrame
-        df = pd.read_csv(uploaded_file, sep=';', encoding='utf-8')
+        df = pd.read_csv(uploaded_file, sep=';', encoding='latin1')
         first_rows.append(df.head())
 
         # Vérifie si la colonne 'initiales_nom' existe dans le DataFrame
@@ -103,7 +103,7 @@ def upload_files():
 
     # Conversion du DataFrame fusionné en fichier CSV
     output = io.BytesIO()
-    concat_df.to_csv(output, sep=';', index=False, encoding='utf-8')
+    concat_df.to_csv(output, sep=';', index=False, encoding='latin1')
     output.seek(0)
 
     # Convert first_rows to HTML string
@@ -113,7 +113,7 @@ def upload_files():
 @app.route('/download', methods=['POST'])
 def download_csv():
     csv_data = request.form.get("csv_data")
-    output = io.BytesIO(csv_data.encode("utf-8"))
+    output = io.BytesIO(csv_data.encode("latin1"))
     return send_file(output, attachment_filename='merged_file.csv', as_attachment=True, mimetype='text/csv')
 
 
