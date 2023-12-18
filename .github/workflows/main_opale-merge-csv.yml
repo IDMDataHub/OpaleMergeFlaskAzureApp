@@ -66,4 +66,4 @@ jobs:
         with:
           app-name: 'opale-merge-csv'
           slot-name: 'Production'
-          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_87B84037B8AF445E873F1663ACC1627C }}
+          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_1B8EF73A14C24D0BA8E195244C39417C }}
