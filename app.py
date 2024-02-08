@@ -61,7 +61,7 @@ def upload_files():
     first_rows = []  # Ajoutez cette ligne
     for iCpt, uploaded_file in enumerate(uploaded_files):
         # Lit le fichier CSV et stocke le contenu dans un DataFrame
-        df = pd.read_csv(uploaded_file, sep=';', encoding='latin1')
+        df = pd.read_csv(uploaded_file, sep=';', encoding='latin1', engine='python')
         first_rows.append(df.head())
 
         # Vérifie si la colonne 'initiales_nom' existe dans le DataFrame
@@ -108,13 +108,17 @@ def upload_files():
 
     # Convert first_rows to HTML string
     first_rows_html = "<br>".join([f"<h4>File {i+1}: {uploaded_files[i].filename}</h4>{row.to_html()}" for i, row in enumerate(first_rows)])
-    return send_file(output, attachment_filename='merged_file.csv', as_attachment=True, mimetype='text/csv')
+    return send_file(output, download_name='merged_file.csv', as_attachment=True, mimetype='text/csv')
 
 @app.route('/download', methods=['POST'])
 def download_csv():
     csv_data = request.form.get("csv_data")
     output = io.BytesIO(csv_data.encode("latin1"))
-    return send_file(output, attachment_filename='merged_file.csv', as_attachment=True, mimetype='text/csv')
+    return send_file(output, download_name='merged_file.csv', as_attachment=True, mimetype='text/csv')
+    # return send_file(output, download_name='merged_file.csv', as_attachment=True)
+
+
+
 
 
 
