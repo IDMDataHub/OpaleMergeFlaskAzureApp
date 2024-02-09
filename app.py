@@ -111,7 +111,6 @@ def download_csv():
     csv_data = request.form.get("csv_data")
     output = io.BytesIO(csv_data.encode("latin1"))
     return send_file(output, download_name='merged_file.csv', as_attachment=True, mimetype='text/csv')
-    # return send_file(output, download_name='merged_file.csv', as_attachment=True)
 
 
 if __name__ == '__main__':
