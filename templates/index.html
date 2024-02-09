@@ -8,27 +8,22 @@
       body {
         font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
       }
-
       header {
         background-color: #35BDBD;
         color: white;
         padding: 1rem 0;
       }
-
       header h1 {
         font-weight: bold;
       }
-
       #preview table {
         font-size: 0.6rem;
       }
-
       .btn-custom {
         background-color: #35BDBD;
         border-color: #35BDBD;
         color: white;
       }
-
       .btn-custom:hover,
       .btn-custom:focus {
         background-color: #29a3a3;
@@ -41,12 +36,21 @@
       function readCSVFiles(event) {
         const output = document.getElementById('preview');
         output.innerHTML = '';
+        const fileOrderTableBody = document.getElementById('fileOrderTableBody');
+        fileOrderTableBody.innerHTML = ''; // Clear existing rows
+
         const files = event.target.files;
 
         for (let i = 0; i < files.length; i++) {
           const file = files[i];
-          const reader = new FileReader();
 
+          // Add file name and order input to the table
+          const tr = document.createElement('tr');
+          tr.innerHTML = `<td>${file.name}</td><td><input type="number" name="file_order[]" min="1" value="${i + 1}" required></td>`;
+          fileOrderTableBody.appendChild(tr);
+
+          // Previewing file contents
+          const reader = new FileReader();
           reader.onload = function(e) {
             const fileNameHeading = document.createElement('h4');
             fileNameHeading.textContent = file.name;
@@ -91,10 +95,17 @@
           <label for="csv_files" class="form-label">Sélectionner les fichiers CSV à fusionner (sélectionner l'ensemble des fichiers en même temps)</label>
           <input class="form-control" type="file" id="csv_files" name="csv_files[]" multiple required onchange="readCSVFiles(event)">
         </div>
-        <div class="mb-3">
-          <label for="reference_block" class="form-label">Choisir le CSV de référence (optionnel - par défaut il s'agit du premier bloc)</label>
-          <input class="form-control" type="number" id="reference_block" name="reference_block" min="1" required>
-        </div>
+        <table class="table table-bordered">
+          <thead>
+            <tr>
+              <th>Nom du fichier</th>
+              <th>Ordre</th>
+            </tr>
+          </thead>
+          <tbody id="fileOrderTableBody">
+            <!-- Les lignes seront ajoutées ici par JavaScript -->
+          </tbody>
+        </table>
         <button type="submit" class="btn btn-custom">Fusionner et Télécharger</button>
       </form>
       <div id="preview" class="mb-3 mt-4"></div>
@@ -102,4 +113,3 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
   </body>
 </html>
-

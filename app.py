@@ -46,21 +46,20 @@ def index():
 @app.route('/upload', methods=['POST'])
 def upload_files():
     uploaded_files = request.files.getlist("csv_files[]")
-    reference_block = int(request.form.get('reference_block'))
+    file_order = request.form.getlist("file_order[]")  # Récupérer l'ordre des fichiers
 
-    # Move the reference block to the first position in the list
-    uploaded_files.insert(0, uploaded_files.pop(reference_block - 1))
+    # Créer un dictionnaire pour mapper le nom du fichier à son ordre
+    file_order_dict = {file.filename: int(order) for file, order in zip(uploaded_files, file_order)}
 
-    # Initialisation du DataFrame de concaténation
-    concat_df = None
+    # Trier les fichiers téléchargés selon l'ordre spécifié
+    uploaded_files.sort(key=lambda file: file_order_dict.get(file.filename, 999))
 
-    # Initialise une liste vide pour stocker les DataFrames
+    # Suite du traitement
     dfs = []
 
     # Boucle sur chaque fichier téléchargé dans la liste 'uploaded_files'
     first_rows = []  # Ajoutez cette ligne
     for iCpt, uploaded_file in enumerate(uploaded_files):
-        # Lit le fichier CSV et stocke le contenu dans un DataFrame
         df = pd.read_csv(uploaded_file, sep=';', encoding='latin1', engine='python')
         first_rows.append(df.head())
 
@@ -88,9 +87,9 @@ def upload_files():
             df.set_index('initiales_nom')
             df = df.add_prefix(str(iCpt+1)+'_')
 
-        # Affiche les 5 premières lignes du DataFrame
-        print(f"File {iCpt+1}: {uploaded_file.filename}")
-        print(df.head())
+        # # Affiche les 5 premières lignes du DataFrame
+        # print(f"File {iCpt+1}: {uploaded_file.filename}")
+        # print(df.head())
 
         # Stocke le DataFrame dans une variable globale avec un nom unique et ajoute le DataFrame à la liste 'dfs'
         globals()['df%s' % iCpt] = df
@@ -98,16 +97,13 @@ def upload_files():
 
     # Fusionner les dataframes de la liste l horizontalement (en colonnes)
     concat_df = pd.concat(dfs, axis=1)
-    # Renommer la première colonne en 'initiales_nom'
     concat_df.rename(columns={concat_df.columns[0]: 'initiales_nom'}, inplace=True)
 
-    # Conversion du DataFrame fusionné en fichier CSV
     output = io.BytesIO()
     concat_df.to_csv(output, sep=';', index=False, encoding='latin1')
     output.seek(0)
 
     # Convert first_rows to HTML string
-    first_rows_html = "<br>".join([f"<h4>File {i+1}: {uploaded_files[i].filename}</h4>{row.to_html()}" for i, row in enumerate(first_rows)])
     return send_file(output, download_name='merged_file.csv', as_attachment=True, mimetype='text/csv')
 
 @app.route('/download', methods=['POST'])
@@ -116,10 +112,6 @@ def download_csv():
     output = io.BytesIO(csv_data.encode("latin1"))
     return send_file(output, download_name='merged_file.csv', as_attachment=True, mimetype='text/csv')
     # return send_file(output, download_name='merged_file.csv', as_attachment=True)
-
-
-
-
 
 
 if __name__ == '__main__':
