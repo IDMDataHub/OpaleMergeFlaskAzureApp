@@ -88,8 +88,8 @@ def upload_files():
             df = df.add_prefix(str(iCpt+1)+'_')
 
         # # Affiche les 5 premières lignes du DataFrame
-        # print(f"File {iCpt+1}: {uploaded_file.filename}")
-        # print(df.head())
+        print(f"File {iCpt+1}: {uploaded_file.filename}")
+        print(df.head())
 
         # Stocke le DataFrame dans une variable globale avec un nom unique et ajoute le DataFrame à la liste 'dfs'
         globals()['df%s' % iCpt] = df
