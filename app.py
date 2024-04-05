@@ -1,11 +1,3 @@
-#!/usr/bin/env python3
-# -*- coding: utf-8 -*-
-"""
-Created on Fri Mar 18 09:28:35 2022
-
-@author: maximejacoupy
-"""
-
 # #######################################################################################################################
 #                                              # === LIBRAIRIES === #
 # #######################################################################################################################
@@ -15,20 +7,28 @@ from flask import Flask, render_template, request, send_file
 import os
 import io
 
+
+#####################################################################
+# =========================== CONSTANTES ========================== #
+#####################################################################
+
 app = Flask(__name__)
 
-# #######################################################################################################################
-#                                              # === FUNCTIONS === #
-# #######################################################################################################################
+
+#####################################################################
+# ==================== FONCTIONS D'ASSISTANCES ==================== #
+#####################################################################
 
 def convert_df(df):
-    """Convertit un DataFrame pandas en une chaîne d'octets encodée en utf-8 avec un séparateur de colonnes personnalisé.
-    
+    """
+    Convertit un DataFrame pandas en une chaîne d'octets, en utilisant ";" comme séparateur de colonnes,
+    et encode le résultat en latin1.
+
     Parameters:
-        df (pandas.DataFrame): Le DataFrame à convertir.
-        
+    - df (pandas.DataFrame): Le DataFrame à convertir.
+
     Returns:
-        bytes: La chaîne d'octets encodée en utf-8 représentant le DataFrame.
+    - bytes: La chaîne d'octets résultante, encodée en latin1.
     """
     # Utilisation de ";" comme séparateur de colonnes personnalisé
     csv_data = df.to_csv(sep=';', index=False)
@@ -40,11 +40,23 @@ def convert_df(df):
 
 @app.route('/', methods=['GET'])
 def index():
-    return render_template('index.html')
+    """
+    Route principale qui affiche la page d'accueil.
 
+    Returns:
+    - str: Le contenu HTML de la page d'accueil.
+    """
+    return render_template('index.html')
 
 @app.route('/upload', methods=['POST'])
 def upload_files():
+    """
+    Traite le téléchargement de fichiers CSV, les trie selon l'ordre spécifié par l'utilisateur,
+    fusionne les données et envoie le fichier CSV fusionné au client.
+
+    Returns:
+    - send_file: Un objet Flask `send_file` contenant le fichier CSV fusionné.
+    """
     uploaded_files = request.files.getlist("csv_files[]")
     file_order = request.form.getlist("file_order[]")  # Récupérer l'ordre des fichiers
 
@@ -108,10 +120,23 @@ def upload_files():
 
 @app.route('/download', methods=['POST'])
 def download_csv():
+    """
+    Génère un fichier CSV à partir des données soumises et le retourne pour téléchargement.
+
+    Returns:
+    - send_file: Un objet Flask `send_file` contenant le fichier CSV généré.
+    """
     csv_data = request.form.get("csv_data")
     output = io.BytesIO(csv_data.encode("latin1"))
     return send_file(output, download_name='merged_file.csv', as_attachment=True, mimetype='text/csv')
 
 
+#####################################################################
+# ====================== LANCEMENT DE L'ALGO ====================== #
+#####################################################################
+
 if __name__ == '__main__':
+    """
+    Point d'entrée principal pour l'application Flask. Exécute l'application en mode debug.
+    """
     app.run(debug=True)
