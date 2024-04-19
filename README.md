@@ -1,50 +1,50 @@
 
-# **OpaleMergeFlaskAzureApp**
+# OpaleMergeFlaskAzureApp
 
-## *Description Brève*
-**OpaleMergeFlaskAzureApp** est une application web polyvalente conçue pour *fusionner des fichiers CSV* en utilisant Flask, optimisée pour un déploiement sur Azure. Cet outil facilite la manipulation de données en permettant aux utilisateurs de **télécharger, traiter et fusionner** divers fichiers CSV en un format unifié, le rendant idéal pour les analystes de données et toute personne gérant de grands ensembles de données.
+## Brief Description
+**OpaleMergeFlaskAzureApp** is a versatile web application designed for *merging CSV files* using Flask, optimized for deployment on Azure. This tool simplifies data handling by allowing users to **upload, process, and merge** various CSV files into a unified format, making it ideal for data analysts and anyone managing large datasets.
 
-### Fonctionnalités
-- **Téléchargement de Fichiers CSV** : Permet aux utilisateurs de télécharger plusieurs fichiers CSV pour traitement.
-- **Gestion des Colonnes** : Détecte et gère automatiquement différentes structures de colonnes telles que 'initiales_nom' et 'numero_patient'.
-- **Préfixage des Colonnes** : Ajoute automatiquement des préfixes aux noms des colonnes en fonction de l'ordre des fichiers, facilitant l'identification après la fusion.
-- **Fusion de Fichiers CSV** : Fusionne plusieurs fichiers CSV téléchargés en un seul fichier consolidé.
-- **Téléchargement du Fichier Fusionné** : Les utilisateurs peuvent télécharger le fichier CSV fusionné directement depuis l'interface web.
+### Features
+- **CSV File Upload**: Allows users to upload multiple CSV files for processing.
+- **Column Management**: Automatically detects and manages different column structures such as 'initials_name' and 'patient_number'.
+- **Column Prefixing**: Automatically adds prefixes to column names based on the order of the files, facilitating identification after merging.
+- **CSV File Merging**: Merges multiple uploaded CSV files into one consolidated file.
+- **Merged File Download**: Users can download the merged CSV file directly from the web interface.
 
 ### Installation
-Pour installer ce projet localement, suivez ces étapes :
+To install this project locally, follow these steps:
 
-1. *Clonez le dépôt* :
+1. *Clone the repository*:
    ```bash
    git clone https://github.com/IDMDataHub/OpaleMergeFlaskAzureApp.git
    ```
-2. *Installez les dépendances requises* :
+2. *Install the required dependencies*:
    ```bash
    pip install -r requirements.txt
    ```
 
-### Utilisation
-Pour exécuter l'application Flask :
+### Usage
+To run the Flask application:
 ```bash
 python app.py
 ```
-Accédez à l'application web via `localhost:5000` dans votre navigateur web.
+Access the web application via `localhost:5000` in your web browser.
 
-### Points d'Accès
-- **Accueil (`/`)** : Page de destination pour le téléchargement de fichiers.
-- **Téléchargement (`/upload`)** : Point d'accès pour le téléchargement et le traitement des fichiers CSV.
-- **Téléchargement (`/download`)** : Point d'accès pour télécharger le fichier CSV fusionné.
+### Endpoints
+- **Home (`/`)**: Landing page for uploading files.
+- **Upload (`/upload`)**: Access point for uploading and processing CSV files.
+- **Download (`/download`)**: Access point to download the merged CSV file.
 
-### Bibliothèques Utilisées
-- `pandas` : Pour la manipulation de DataFrame.
-- `Flask` : Framework web pour gérer les requêtes HTTP et le rendu des templates.
-- `os`, `io` : Utilitaires pour les opérations de fichiers et d'entrée/sortie.
+### Libraries Used
+- `pandas`: For DataFrame manipulation.
+- `Flask`: Web framework to handle HTTP requests and template rendering.
+- `os`, `io`: Utilities for file operations and input/output.
 
 ### Contribution
-Les contributions sont les bienvenues ! Pour les changements majeurs, veuillez ouvrir un problème d'abord pour discuter de ce que vous souhaitez changer.
+Contributions are welcome! For major changes, please open an issue first to discuss what you would like to change.
 
-### Licence
-Ce projet est sous licence [MIT](https://choosealicense.com/licenses/mit/).
+### License
+This project is licensed under the [MIT License](https://choosealicense.com/licenses/mit/).
 
-### Auteur
+### Author
 *Maxime Jacoupy*
