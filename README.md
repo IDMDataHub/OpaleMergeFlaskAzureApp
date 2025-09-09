@@ -48,3 +48,6 @@ This project is licensed under the [MIT License](https://choosealicense.com/lice
 
 ### Author
 *Maxime Jacoupy*
+
+
+<!-- Security scan triggered at 2025-09-09 05:46:39 -->
